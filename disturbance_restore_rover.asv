@@ -255,6 +255,9 @@ writetable(T_syn,[filename(1: end-4) '_syn.csv']);
 % full_disturb(:, 2) = full_disturb(:, 3); %x
 % full_disturb(:, 3) = temp; %y
 % %=====================================
+% The logged data is in NED frame s there is no frame change in
+% rover
+
 
 T_disturb_lin = array2table(full_disturb(logical(accel_log_record(1, :)'), [1, 2:3]));
 T_disturb_rot = array2table(full_disturb(logical(accel_log_record(2, :)'), [1, 4]));

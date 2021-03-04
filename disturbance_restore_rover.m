@@ -237,26 +237,12 @@ end
 %% write data
 
 sync_log_k = max_freq/10;
-sync_data = test_data(1:end, [1:3, 7:9, 13]); % NED frame
+sync_data = test_data(1:sync_log_k:end, [1:3, 7:9, 13]); % NED frame
 T_syn = array2table(sync_data);
-% T_syn.Properties.VariableNames(1:13) = {'Time_us','x','y', 'z', 'roll', 'pitch', 'yaw',...
-%     'V_x', 'V_y', 'V_z', 'Gyro_x', 'Gyro_y', 'Gyro_z'};
 T_syn.Properties.VariableNames(1:7) = {'Time_us','x','y', 'yaw', 'V_x', 'V_y', 'Gyro_z'};
 
 writetable(T_syn,[filename(1: end-4) '_syn.csv']);
-
-% %==========from ENU to NED=============
-% %body: y = -y, z = -z
-% full_disturb(:, [6,7]) = -full_disturb(:, [6,7]);
-% 
-% %world x <-> y, z = -z
-% full_disturb(:, 4) = -full_disturb(:, 4); %z
-% temp = full_disturb(:, 2);
-% full_disturb(:, 2) = full_disturb(:, 3); %x
-% full_disturb(:, 3) = temp; %y
-% %=====================================
-% The logged data is in ENU frame
-
+% The logged data is in NED frame since there is no frame change in rover
 
 T_disturb_lin = array2table(full_disturb(logical(accel_log_record(1, :)'), [1, 2:3]));
 T_disturb_rot = array2table(full_disturb(logical(accel_log_record(2, :)'), [1, 4]));

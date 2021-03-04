@@ -25,15 +25,33 @@ This provides a prototype of our tool and data set to play, including system ide
 
 ## Directory Structure
 
-* dataset
-* system_id
-* rvplayer - targets, adaptive logging, replayer  
+* Dataset
+* System Identification
+* Adaptive logging (Disturbance Capturing)
+* Replayer and Simulation
 
 ## Dataset
 
-*
+* `Data/Drone/Test3`: SimQuad
+* `Data/Drone/Test5`: 3DR Solo
+* `Data/Rover/Test6`: SimRover
+* `Data/Rover/Test8`: Erle-Brain
 
 
 ## Install
 
+For matlab code, install Matlab R2017B or above.
+
+For controller part and SITL simulation, follow the installing instructions of [Ardupilot](https://ardupilot.org/dev/docs/where-to-get-the-code.html) and [OpenSolo](https://github.com/OpenSolo/OpenSolo/wiki). 
+
 ## How to run
+
+1. Run `systemid.m` or `rover_systemid.m` to do system identification and learn model parameters.
+2. Run `disturbance_restore.m` or `disturbance_restore_rover.m` to capture disturbance of trace and have adaptively logged disturbance data and synchronization data with name `XXX_disturb_lin.csv`, `XXX_disturb_rot.csv` and `XXX_syn.csv`.
+3. Put the disturbance and sync data to folder `Controllers/ardupilot/libraries/SITL/sim_rerun/MultiCopter/` (for Drones) or `Controllers/ardupilot/libraries/SITL/sim_rerun/Rover/` (for Rovers).
+4. Change the config file `Controllers/ardupilot/libraries/SITL/sim_rerun/config.csv` to disable `origin_model`, enable `add_disturb` and enable `sync_states`. Leave other configs as `0`. 
+5. Build the controller to SITL target (follow building instructions of [Ardupilot](https://ardupilot.org/dev/docs/where-to-get-the-code.html)) and run with following command in `Arducopter` or `APMRover2` folder. (For rovers, `-f X` option is not required).
+    ```
+    sim_vehicle.py -L <place> -f X --map --console
+    ```
+     Make sure replacing `<place>` as the start place in mission plan and upload the same mission plan to vehicle before starting replaying.
