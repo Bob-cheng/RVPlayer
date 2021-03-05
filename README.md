@@ -40,9 +40,15 @@ This provides a prototype of our tool and data set to play, including system ide
 
 ## Install
 
-For matlab code, install Matlab R2017B or above.
+- Clone this repository and initialize all the submodules with following command.
 
-For controller part and SITL simulation, follow the installing instructions of [Ardupilot](https://ardupilot.org/dev/docs/where-to-get-the-code.html) and [OpenSolo](https://github.com/OpenSolo/OpenSolo/wiki). 
+    ```
+    git submodule update --init --recursive
+    ```
+
+- To run matlab code, install Matlab R2017B or above.
+
+- For controller part and SITL simulation (`Controllers/ardupilot/`), follow the installing and building instructions of [Ardupilot](https://ardupilot.org/dev/docs/where-to-get-the-code.html) and [OpenSolo](https://github.com/OpenSolo/OpenSolo/wiki). 
 
 ## How to run
 
@@ -56,5 +62,5 @@ For controller part and SITL simulation, follow the installing instructions of [
     ```
     sim_vehicle.py -L <place> -f X --map --console
     ```
-    
+
      Make sure replacing `<place>` as the start place in mission plan and upload the same mission plan to vehicle before starting replaying.
