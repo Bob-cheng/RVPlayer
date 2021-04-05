@@ -52,15 +52,25 @@ This provides a prototype of our tool and data set to play, including system ide
 
 ## How to run
 
+### System Identification
+
 1. Run `systemid.m` or `rover_systemid.m` to do system identification and learn model parameters.
-2. Run `disturbance_restore.m` or `disturbance_restore_rover.m` to capture disturbance of trace and have adaptively logged disturbance data and synchronization data with name `XXX_disturb_lin.csv`, `XXX_disturb_rot.csv` and `XXX_syn.csv`.
-3. Put the disturbance and sync data to folder `Controllers/ardupilot/libraries/SITL/sim_rerun/MultiCopter/` (for Drones) or `Controllers/ardupilot/libraries/SITL/sim_rerun/Rover/` (for Rovers).
+
+### Disturbance Capturing
+1. Run `disturbance_restore.m` or `disturbance_restore_rover.m` to capture disturbance of trace and generate adaptively logged disturbance data and synchronization data with name `XXX_disturb_lin.csv`, `XXX_disturb_rot.csv` and `XXX_syn.csv`.
+
+### Vanilla Replay
+1. Put the disturbance and sync data to folder `Controllers/ardupilot/libraries/SITL/sim_rerun/MultiCopter/` (for Drones) or `Controllers/ardupilot/libraries/SITL/sim_rerun/Rover/` (for Rovers).
 4. Assign the trace number (the `XXX`) to variable `fileNo` in `Controllers/ardupilot/libraries/SITL/SIM_Multicopter.cpp` or `Controllers/ardupilot/libraries/SITL/SIM_Rover.cpp`
-5. Change the config file `Controllers/ardupilot/libraries/SITL/sim_rerun/config.csv` to disable `origin_model`, enable `add_disturb` and enable `sync_states`. Leave other configs as `0`. 
-6. Build the controller to SITL target (follow building instructions of [Ardupilot](https://ardupilot.org/dev/docs/where-to-get-the-code.html)) and run with following command in `Arducopter` or `APMRover2` folder. (For rovers, `-f X` option is not required).
+5. Change the vehicle type (`RERUN_SIM_FRAME`) in `SIM_Multicopter.h` or `SIM_Rover.h` as the target vehicle.
+6. Change the config file `Controllers/ardupilot/libraries/SITL/sim_rerun/config.csv` to disable `origin_model`, enable `add_disturb` and enable `sync_states`. Leave other configs as `0`. 
+7. Build the controller to SITL target (follow building instructions of [Ardupilot](https://ardupilot.org/dev/docs/where-to-get-the-code.html)) and run with following command in `Arducopter` or `APMRover2` folder. (For rovers, `-f X` option is not required).
    
     ```
     sim_vehicle.py -L <place> -f X --map --console
     ```
 
      Make sure replacing `<place>` as the start place in mission plan and upload the same mission plan to vehicle before starting replaying.
+
+### Sensor Spoofing Detection
+1. Run `IMUReplay.mlx` in MATLAB. Change the trace number to mission trace.

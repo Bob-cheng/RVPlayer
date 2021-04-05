@@ -9,8 +9,6 @@
 143: weak wind (138)
 147: normal wind
 
-see: 
-https://www.notion.so/bobcheng/Real-Attack-Test-83db042416e2447ca8fe12e464faeaef
 =====Disturbances Copter=======
 - 154 — 2m hovering reference
 - 155 — 2m small wind (10mph)
